@@ -60,19 +60,32 @@ canvas {
   transform: scaleY(-1);
 }
 
-#count {
+.count {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
-#count div {
-  margin-bottom: 16px;
-  padding: 0 10px;
+.countStat {
+  display: flex;
+  justify-content: space-between;
+  min-width: 100px;
+  border: 1px solid #eee;
+  padding: 4px 10px;
+  font-size: 16px;
+  align-items: center;
+  flex-direction: column;
 }
 
-#count span {
-  font-size: 21px;
+.countContainer {
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding-bottom: 5px;
+}
+
+.countNum {
+  font-size: 20px;
   font-weight: 800;
 }
 
@@ -125,7 +138,7 @@ label {
 }
 
 #death-count.show {
-  display: block;
+  display: flex;
 }
 
 @media (min-width: 800px) {

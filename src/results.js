@@ -21,7 +21,7 @@ const domElements = Object.fromEntries(
   Object.keys(COUNTERS).map(state => {
     const el = document.getElementById(state)
     if (el) {
-      el.parentNode.style = `color: ${COLORS[state]}`
+      el.style = `color: ${COLORS[state]}`
     }
     return [state, document.getElementById(state)]
   })
