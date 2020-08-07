@@ -32,9 +32,9 @@ const updateGraph = () => {
   const rects = Object.entries(RUN.results).map(([state, count]) => {
     const color = COLORS[state]
     if (count > 0) {
-      const percentatge = count / 200 * 50
-      const rect = `<rect height="${percentatge}" y="${y}" width="1" fill="${color}"></rect>`
-      y += percentatge
+      const percentage = count / 200 * 50
+      const rect = `<rect height="${percentage}" y="${y}" width="1" fill="${color}"></rect>`
+      y += percentage
       return rect
     }
     return ''
