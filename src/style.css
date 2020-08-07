@@ -1,0 +1,139 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+#share {
+  position: fixed;
+  bottom: 16px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px 0 0 5px;
+  background: rgba(0, 153, 255, 0.25);
+  z-index: 1;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 4px 16px;
+  color: #000;
+}
+
+#share:hover {
+  background: rgba(0, 153, 255, 0.5);
+}
+
+body {
+  align-items: center;
+  background-image: radial-gradient(#D7D7D7 1px, transparent 1px), radial-gradient(#d7d7d7 1px, transparent 1px);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  justify-content: center;
+  margin: 0 auto;
+  user-select: none;
+  width: 360px;
+}
+
+h1 {
+  font-size: 23px;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+canvas {
+  border: 1px solid #eee;
+}
+
+#graph {
+  margin-bottom: 1px;
+  transform: scaleY(-1);
+}
+
+#count {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+#count div {
+  margin-bottom: 16px;
+  padding: 0 10px;
+}
+
+#count span {
+  font-size: 21px;
+  font-weight: 800;
+}
+
+footer {
+  padding-bottom: 8px;
+  color: #777;
+  font-size: 12px;
+}
+
+footer a {
+  color: #09f;
+  text-decoration: none;
+}
+
+form {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+label {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#canvas {
+  margin: auto;
+  padding-bottom: 16px;
+  position: relative;
+}
+
+#replay {
+  align-items: center;
+  background: rgba(255, 255, 255, .85);
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  font-weight: 500;
+  font-size: 21px;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+}
+
+#death-count {
+  display: none;
+}
+
+#death-count.show {
+  display: block;
+}
+
+@media (min-width: 800px) {
+  body {
+    width: 800px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+}
