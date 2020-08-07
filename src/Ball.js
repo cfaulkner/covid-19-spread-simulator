@@ -5,7 +5,8 @@ import {
   TICKS_TO_RECOVER,
   RUN,
   SPEED,
-  STATES
+  STATES,
+  SOCIAL_DISTANCING_INFECTION_RATE
 } from './options.js'
 import { checkCollision, calculateChangeDirection } from './collisions.js'
 
@@ -27,7 +28,7 @@ export class Ball {
   }
 
   checkState () {
-    if (this.state === STATES.infected) {
+    if (this.state === STATES.infected || this.state === STATES.sd_infected) {
       if (RUN.filters.death && !this.survivor && this.timeInfected >= TICKS_TO_RECOVER / 2) {
         this.survivor = this.sketch.random(100) >= MORTALITY_PERCENTAGE
         if (!this.survivor) {
@@ -40,7 +41,12 @@ export class Ball {
       }
 
       if (this.timeInfected >= TICKS_TO_RECOVER) {
-        this.state = STATES.recovered
+        if (this.state === STATES.sd_infected) {
+          this.state = STATES.sd_recovered
+        } else {
+          this.state = STATES.recovered
+        }
+
         RUN.results[STATES.infected]--
         RUN.results[STATES.recovered]++
       } else {
@@ -49,7 +55,7 @@ export class Ball {
     }
   }
 
-  checkCollisions ({ others }) {
+  checkCollisions ({ others, sketch }) {
     if (this.state === STATES.death) return
 
     for (let i = this.id + 1; i < others.length; i++) {
@@ -57,11 +63,23 @@ export class Ball {
       const { state, x, y } = otherBall
       if (state === STATES.death) continue
 
+      let radiusMultiplier = 2
+      if (this.state === STATES.social_distancing ||
+        otherBall.state === STATES.social_distancing ||
+        this.state === STATES.sd_infected ||
+        otherBall.state === STATES.sd_infected ||
+        this.state === STATES.sd_recovered ||
+        otherBall.state === STATES.sd_recovered
+      ) radiusMultiplier = 6
+
       const dx = x - this.x
       const dy = y - this.y
 
-      if (checkCollision({ dx, dy, diameter: BALL_RADIUS * 2 })) {
+      if (checkCollision({ dx, dy, diameter: BALL_RADIUS * radiusMultiplier })) {
         const { ax, ay } = calculateChangeDirection({ dx, dy })
+
+        // There is still a chance that social distancing can be infected
+        const socialDistancingInfected = sketch.random(0, 100) < SOCIAL_DISTANCING_INFECTION_RATE
 
         this.vx -= ax
         this.vy -= ay
@@ -70,11 +88,30 @@ export class Ball {
 
         // both has same state, so nothing to do
         if (this.state === state) return
+
+        // If any are social distancing then don't infect
+        if ((state === STATES.social_distancing || this.state === STATES.social_distancing) &&
+          !socialDistancingInfected) return
+
         // if any is recovered, then nothing happens
-        if (this.state === STATES.recovered || state === STATES.recovered) return
+        if (this.state === STATES.recovered || state === STATES.recovered ||
+          this.state === STATES.sd_recovered || state === STATES.sd_recovered) return
+
         // then, if some is infected, then we make both infected
-        if (this.state === STATES.infected || state === STATES.infected) {
-          this.state = otherBall.state = STATES.infected
+        if ((this.state === STATES.infected ||
+          state === STATES.infected) &&
+          this.state !== STATES.sd_infected &&
+            state !== STATES.sd_infected) {
+          if (socialDistancingInfected && (this.state === STATES.social_distancing ||
+            state === STATES.social_distancing)) {
+            RUN.results.sd_infected++
+
+            if (this.state === STATES.social_distancing) this.state = STATES.sd_infected
+            if (state === STATES.social_distancing) otherBall.state = STATES.sd_infected
+          } else {
+            this.state = otherBall.state = STATES.infected
+          }
+
           RUN.results[STATES.infected]++
           RUN.results[STATES.well]--
         }
@@ -106,6 +143,8 @@ export class Ball {
   render () {
     const color = COLORS[this.state]
     this.sketch.noStroke()
+    if (this.state === STATES.sd_infected || this.state === STATES.social_distancing ||
+      this.state === STATES.sd_recovered) this.sketch.stroke(COLORS.sd_stroke)
     this.sketch.fill(color)
     this.sketch.ellipse(this.x, this.y, diameter, diameter)
   }

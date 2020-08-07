@@ -31,7 +31,7 @@ const updateGraph = () => {
   let y = 0
   const rects = Object.entries(RUN.results).map(([state, count]) => {
     const color = COLORS[state]
-    if (count > 0) {
+    if (count > 0 && state !== STATES.social_distancing && state !== STATES.sd_infected) {
       const percentage = count / 200 * 50
       const rect = `<rect height="${percentage}" y="${y}" width="1" fill="${color}"></rect>`
       y += percentage

@@ -87,11 +87,13 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
     }
   }
 
+  RUN.results[STATES.well] += RUN.results[STATES.social_distancing]
+
   sketch.draw = () => {
     sketch.background('white')
     balls.forEach(ball => {
       ball.checkState()
-      ball.checkCollisions({ others: balls })
+      ball.checkCollisions({ others: balls, sketch: sketch })
       ball.move()
       ball.render()
     })
