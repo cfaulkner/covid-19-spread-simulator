@@ -42,7 +42,7 @@ export const COUNTERS = {
 
 export const TOTAL_PEOPLE = 100
 export const TOTAL_INFECTED = 1
-export const TOTAL_SOCIAL_DISTANCING = 25
+export const TOTAL_SOCIAL_DISTANCING = document.getElementById('socialDistancingTotal').value
 
 export const STARTING_BALLS = {
   [STATES.infected]: TOTAL_INFECTED,
@@ -68,6 +68,6 @@ export const SOCIAL_DISTANCING_INFECTION_RATE = 5
 
 export const resetRun = () => {
   RUN.results = { ...STARTING_BALLS }
-  RUN.results[STATES.well] += RUN.results[STATES.social_distancing]
+  RUN.results[STATES.well] += parseInt(RUN.results[STATES.social_distancing])
   RUN.tick = 0
 }

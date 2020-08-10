@@ -154,3 +154,15 @@ label {
     font-size: 28px;
   }
 }
+
+#sdChangeBox {
+  display: flex;
+}
+#sdChangeBox .sdChange {
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
+  font-size: 20px;
+}
+
