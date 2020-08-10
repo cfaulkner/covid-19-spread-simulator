@@ -1,6 +1,6 @@
 const DEFAULT_FILTERS = {
-  death: false,
-  stayHome: false
+  death: true,
+  stayHome: true
 }
 
 export const CANVAS_SIZE = {
@@ -43,6 +43,7 @@ export const COUNTERS = {
 export const TOTAL_PEOPLE = 100
 export const TOTAL_INFECTED = 1
 export const TOTAL_SOCIAL_DISTANCING = document.getElementById('socialDistancingTotal').value
+export const TOTAL_ISOLATING = document.getElementById('isolatingTotal').value
 
 export const STARTING_BALLS = {
   [STATES.infected]: TOTAL_INFECTED,

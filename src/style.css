@@ -155,10 +155,10 @@ label {
   }
 }
 
-#sdChangeBox {
+#sdChangeBox, #isoChangeBox {
   display: flex;
 }
-#sdChangeBox .sdChange {
+#isoChangeBox .isoChange, #sdChangeBox .sdChange {
   margin: 0 5px;
   cursor: pointer;
   background-color: #fff;
