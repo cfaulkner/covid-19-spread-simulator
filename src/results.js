@@ -21,7 +21,7 @@ const domElements = Object.fromEntries(
   Object.keys(COUNTERS).map(state => {
     const el = document.getElementById(state)
     if (el) {
-      el.parentNode.style = `color: ${COLORS[state]}`
+      el.style = `color: ${COLORS[state]}`
     }
     return [state, document.getElementById(state)]
   })
@@ -31,10 +31,10 @@ const updateGraph = () => {
   let y = 0
   const rects = Object.entries(RUN.results).map(([state, count]) => {
     const color = COLORS[state]
-    if (count > 0) {
-      const percentatge = count / 200 * 50
-      const rect = `<rect height="${percentatge}" y="${y}" width="1" fill="${color}"></rect>`
-      y += percentatge
+    if (count > 0 && state !== STATES.social_distancing && state !== STATES.sd_infected) {
+      const percentage = count / 200 * 50
+      const rect = `<rect height="${percentage}" y="${y}" width="1" fill="${color}"></rect>`
+      y += percentage
       return rect
     }
     return ''
